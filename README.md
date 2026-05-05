@@ -8,7 +8,7 @@ This project aims to develop a web platform for University Training Management S
 
 - To design and develop a centralized system for managing academic programs, courses, and student records efficiently.
 - To automate core training management processes such as course registration, scheduling, grading, and graduation evaluation.
-- To provide role-based access control for administrators, lecturers, and students to ensure data security and accuracy.
+- To provide role-based access control for SUPER_ADMINistrators, lecturers, and students to ensure data security and accuracy.
 - To improve transparency and real-time information access for academic progress, schedules, and notifications.
 - To enhance decision-making by providing reports and analytics on training performance and resource utilization.
 
@@ -26,8 +26,8 @@ This project aims to develop a web platform for University Training Management S
 **I. NHÓM QUẢN LÝ NGƯỜI DÙNG – PHÂN QUYỀN**
 | STT | Tên bảng         | Chức năng                                                          |
 | --- | ---------------- | ------------------------------------------------------------------ |
-| 1   | users            | Lưu tài khoản đăng nhập hệ thống cho SV, GV, giáo vụ, admin        |
-| 2   | roles            | Định nghĩa vai trò người dùng (ADMIN, GIAOVU, GIANGVIEN, SINHVIEN) |
+| 1   | users            | Lưu tài khoản đăng nhập hệ thống cho SV, GV, giáo vụ, SUPER_ADMIN        |
+| 2   | roles            | Định nghĩa vai trò người dùng (SUPER_ADMIN, GIAOVU, GIANGVIEN, SINHVIEN) |
 | 3   | user_roles       | Gán nhiều vai trò cho một user                                     |
 | 4   | permissions      | Danh sách quyền chức năng trong hệ thống                           |
 | 5   | role_permissions | Gán quyền cụ thể cho từng vai trò                                  |

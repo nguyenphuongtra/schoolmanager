@@ -1,12 +1,12 @@
 /*!
- * AdminLTE v4.0.0-rc3 (https://adminlte.io)
+ * ADMINLTE v4.0.0-rc3 (https://ADMINlte.io)
  * Copyright 2014-2025 Colorlib <https://colorlib.com>
- * Licensed under MIT (https://github.com/ColorlibHQ/AdminLTE/blob/master/LICENSE)
+ * Licensed under MIT (https://github.com/ColorlibHQ/ADMINLTE/blob/master/LICENSE)
  */
 (function (global, factory) {
     typeof exports === 'object' && typeof module !== 'undefined' ? factory(exports) :
     typeof define === 'function' && define.amd ? define(['exports'], factory) :
-    (global = typeof globalThis !== 'undefined' ? globalThis : global || self, factory(global.adminlte = {}));
+    (global = typeof globalThis !== 'undefined' ? globalThis : global || self, factory(global.ADMINlte = {}));
 })(this, (function (exports) { 'use strict';
 
     const domContentLoadedCallbacks = [];
@@ -87,8 +87,8 @@
 
     /**
      * --------------------------------------------
-     * @file AdminLTE layout.ts
-     * @description Layout for AdminLTE.
+     * @file ADMINLTE layout.ts
+     * @description Layout for ADMINLTE.
      * @license MIT
      * --------------------------------------------
      */
@@ -129,8 +129,8 @@
 
     /**
      * --------------------------------------------
-     * @file AdminLTE card-widget.ts
-     * @description Card widget for AdminLTE.
+     * @file ADMINLTE card-widget.ts
+     * @description Card widget for ADMINLTE.
      * @license MIT
      * --------------------------------------------
      */
@@ -314,8 +314,8 @@
 
     /**
      * --------------------------------------------
-     * @file AdminLTE treeview.ts
-     * @description Treeview plugin for AdminLTE.
+     * @file ADMINLTE treeview.ts
+     * @description Treeview plugin for ADMINLTE.
      * @license MIT
      * --------------------------------------------
      */
@@ -423,8 +423,8 @@
 
     /**
      * --------------------------------------------
-     * @file AdminLTE direct-chat.ts
-     * @description Direct chat for AdminLTE.
+     * @file ADMINLTE direct-chat.ts
+     * @description Direct chat for ADMINLTE.
      * @license MIT
      * --------------------------------------------
      */
@@ -483,8 +483,8 @@
 
     /**
      * --------------------------------------------
-     * @file AdminLTE fullscreen.ts
-     * @description Fullscreen plugin for AdminLTE.
+     * @file ADMINLTE fullscreen.ts
+     * @description Fullscreen plugin for ADMINLTE.
      * @license MIT
      * --------------------------------------------
      */
@@ -568,8 +568,8 @@
 
     /**
      * --------------------------------------------
-     * @file AdminLTE push-menu.ts
-     * @description Push menu for AdminLTE.
+     * @file ADMINLTE push-menu.ts
+     * @description Push menu for ADMINLTE.
      * @license MIT
      * --------------------------------------------
      */
@@ -721,7 +721,7 @@
     });
 
     /**
-     * AdminLTE Accessibility Module
+     * ADMINLTE Accessibility Module
      * WCAG 2.1 AA Compliance Features
      */
     class AccessibilityManager {
@@ -1131,14 +1131,14 @@
     };
 
     /**
-     * AdminLTE v4.0.0-rc3
+     * ADMINLTE v4.0.0-rc3
      * Author: Colorlib
-     * Website: AdminLTE.io <https://adminlte.io>
+     * Website: ADMINLTE.io <https://ADMINlte.io>
      * License: Open source - MIT <https://opensource.org/licenses/MIT>
      */
     onDOMContentLoaded(() => {
         /**
-         * Initialize AdminLTE Core Components
+         * Initialize ADMINLTE Core Components
          * -------------------------------
          */
         const layout = new Layout(document.body);
@@ -1171,4 +1171,4 @@
     exports.initAccessibility = initAccessibility;
 
 }));
-//# sourceMappingURL=adminlte.js.map
+//# sourceMappingURL=ADMINlte.js.map

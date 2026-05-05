@@ -1,8 +1,8 @@
 @charset "UTF-8";
 /*!
- *   AdminLTE v4.0.0-rc3
+ *   ADMINLTE v4.0.0-rc3
  *   Author: Colorlib
- *   Website: AdminLTE.io <https://adminlte.io>
+ *   Website: ADMINLTE.io <https://ADMINlte.io>
  *   License: Open source - MIT <https://opensource.org/licenses/MIT>
  */
 :root,
@@ -15330,7 +15330,7 @@ html.maximized-card {
 }
 
 /* ==========================================================================
-   AdminLTE Accessibility Styles - WCAG 2.1 AA Compliance
+   ADMINLTE Accessibility Styles - WCAG 2.1 AA Compliance
    ========================================================================== */
 /* Skip Links - WCAG 2.4.1: Bypass Blocks */
 .skip-link {
@@ -15590,4 +15590,4 @@ fieldset legend {
   }
 }
 
-/*# sourceMappingURL=adminlte.css.map */
+/*# sourceMappingURL=ADMINlte.css.map */

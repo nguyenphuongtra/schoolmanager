@@ -1,0 +1,21 @@
+{
+	"version": "2.0.0",
+	"tasks": [
+		{
+			"label": "sqlproj: Build QuanLyDaoTao",
+			"type": "process",
+			"command": "dotnet",
+			"args": [
+				"build",
+				"/Users/nguyenphuongtra/Documents/SpringBoot/quanlydaotaoc/QuanLyDaoTao/QuanLyDaoTao.sqlproj"
+			],
+			"problemMatcher": "$sqlproj-problem-matcher",
+			"isBackground": true,
+			"group": {
+				"kind": "build",
+				"isDefault": true
+			},
+			"detail": "Builds the QuanLyDaoTao SQL project"
+		}
+	]
+}

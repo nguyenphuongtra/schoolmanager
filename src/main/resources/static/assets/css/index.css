@@ -1,0 +1,232 @@
+:root {
+  --login-page-bg: #ffffff;
+  --login-panel-border: #cfe7c2;
+  --login-panel-header: #dcedd3;
+  --login-panel-header-text: #3d7a38;
+  --login-body-text: #2f2f2f;
+  --login-muted: #777777;
+  --login-input-border: #cccccc;
+  --login-button-bg: #ffffff;
+  --login-button-border: #c7c7c7;
+}
+
+body.login-active {
+  min-height: 100vh;
+  margin: 0;
+  background:
+    radial-gradient(circle at top center, rgba(225, 240, 216, 0.55), transparent 28%),
+    linear-gradient(180deg, #ffffff 0%, #fbfdf9 100%);
+  color: var(--login-body-text);
+}
+
+.login-shell {
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 2rem 0.75rem;
+}
+
+.login-layout {
+  width: min(1180px, 100%);
+}
+
+.login-brand {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.75rem;
+  margin-bottom: 1.5rem;
+}
+
+.login-brand img {
+  width: 88px;
+  height: 88px;
+  object-fit: contain;
+}
+
+.login-brand-title {
+  text-align: center;
+}
+
+.login-brand-title h1 {
+  margin: 0;
+  font-size: clamp(1.6rem, 3vw, 2.2rem);
+  font-weight: 700;
+  color: #1f2937;
+}
+
+.login-brand-title p {
+  margin: 0.25rem 0 0;
+  color: var(--login-muted);
+  font-size: 0.98rem;
+}
+
+.login-grid {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+  gap: 1.8rem;
+  align-items: start;
+}
+
+.login-box-panel {
+  background: #fff;
+  border: 1px solid var(--login-panel-border);
+  border-radius: 4px;
+  overflow: hidden;
+  box-shadow: 0 10px 30px rgba(55, 84, 40, 0.08);
+}
+
+.login-box-header {
+  padding: 0.9rem 1rem;
+  font-size: 1.05rem;
+  font-weight: 700;
+  color: var(--login-panel-header-text);
+  background: var(--login-panel-header);
+  border-bottom: 1px solid #d6e9ca;
+}
+
+.login-box-body {
+  padding: 1rem 1rem 1.15rem;
+  background: #fff;
+}
+
+.student-guide-title {
+  margin-bottom: 0.6rem;
+  font-size: 1rem;
+  font-weight: 700;
+}
+
+.student-guide-list {
+  margin: 0;
+  padding-left: 1.35rem;
+  line-height: 1.55;
+  font-size: 0.98rem;
+}
+
+.login-form-wrap {
+  padding: 0;
+  background: transparent;
+  backdrop-filter: none;
+}
+
+.login-form-fields {
+  padding: 1rem 1rem 0;
+}
+
+.login-form-actions {
+  display: flex;
+  gap: 0;
+  padding: 0.65rem 0.9rem 0.8rem;
+  margin-top: 1rem;
+  background: #f7f7f7;
+  border-top: 1px solid #e6e6e6;
+}
+
+.login-form-wrap .form-label {
+  margin-bottom: 0.45rem;
+  font-size: 0.98rem;
+  font-weight: 700;
+  color: #2f2f2f;
+}
+
+.login-form-wrap .form-control {
+  height: 2.25rem;
+  border-color: var(--login-input-border);
+  border-radius: 3px;
+  font-size: 0.98rem;
+  box-shadow: inset 0 1px 2px rgba(0, 0, 0, 0.04);
+}
+
+.login-form-wrap .form-control::placeholder {
+  color: #8d8d8d;
+}
+
+.login-form-wrap .form-control:focus {
+  border-color: #9cc68f;
+  box-shadow: 0 0 0 0.12rem rgba(126, 170, 112, 0.16);
+}
+
+.btn-login,
+.btn-secondary-action {
+  min-width: 106px;
+  height: 2.5rem;
+  padding: 0.5rem 0.95rem;
+  border-radius: 0;
+  border: 1px solid var(--login-button-border);
+  background: var(--login-button-bg);
+  color: #333;
+  font-weight: 400;
+  box-shadow: none;
+}
+
+.btn-login:hover,
+.btn-login:focus,
+.btn-secondary-action:hover,
+.btn-secondary-action:focus {
+  background: #f0f0f0;
+  color: #222;
+}
+
+.btn-login i {
+  margin-right: 0.35rem;
+}
+
+.user-chip {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.75rem;
+  padding: 0.45rem 0.8rem;
+  border-radius: 999px;
+  background: rgba(15, 118, 110, 0.08);
+}
+
+.user-chip strong,
+.user-chip small {
+  display: block;
+  line-height: 1.15;
+}
+
+.user-chip small {
+  color: var(--login-muted);
+}
+
+.app-hidden {
+  display: none;
+}
+
+.role-note {
+  color: var(--login-muted);
+}
+
+@media (max-width: 991.98px) {
+  .login-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+@media (max-width: 575.98px) {
+  .login-shell {
+    padding: 1.25rem 0.75rem;
+  }
+
+  .login-brand img {
+    width: 74px;
+    height: 74px;
+  }
+
+  .login-box-body,
+  .login-form-fields {
+    padding: 0.9rem;
+  }
+
+  .login-form-actions {
+    flex-wrap: wrap;
+    gap: 0.65rem;
+  }
+
+  .btn-login,
+  .btn-secondary-action {
+    width: 100%;
+  }
+}
