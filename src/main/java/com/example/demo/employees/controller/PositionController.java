@@ -22,7 +22,7 @@ public class PositionController {
     }
 
     @GetMapping
-    @PreAuthorize("hasAnyRole('SUPER_ADMIN','ACADEMIC_AFFAIRS') or hasAuthority('LECTURER_VIEW')")
+    @PreAuthorize("hasRole('SUPER_ADMIN') or hasAuthority('LECTURER_VIEW')")
     public List<Position> getAll() {
         return repo.findAllByDeletedAtIsNullAndIsActiveTrue();
     }

@@ -21,37 +21,37 @@ public class CourseSectionAdminController {
     }
 
     @GetMapping
-    @PreAuthorize("hasAnyRole('SUPER_ADMIN','ACADEMIC_AFFAIRS','LECTURER') or hasAuthority('CLASS_VIEW')")
+    @PreAuthorize("hasRole('SUPER_ADMIN') or hasAuthority('CLASS_VIEW')")
     public List<CourseSection> getAll() {
         return service.getAll();
     }
 
     @GetMapping("/{id}")
-    @PreAuthorize("hasAnyRole('SUPER_ADMIN','ACADEMIC_AFFAIRS','LECTURER') or hasAuthority('CLASS_VIEW')")
+    @PreAuthorize("hasRole('SUPER_ADMIN') or hasAuthority('CLASS_VIEW')")
     public CourseSection getById(@PathVariable UUID id) {
         return service.getById(id);
     }
 
     @PostMapping
-    @PreAuthorize("hasAnyRole('SUPER_ADMIN','ACADEMIC_AFFAIRS') or hasAuthority('CLASS_CREATE')")
+    @PreAuthorize("hasRole('SUPER_ADMIN') or hasAuthority('CLASS_CREATE')")
     public CourseSection create(@RequestBody CourseSection cs) {
         return service.create(cs);
     }
 
     @PutMapping("/{id}")
-    @PreAuthorize("hasAnyRole('SUPER_ADMIN','ACADEMIC_AFFAIRS') or hasAuthority('CLASS_UPDATE')")
+    @PreAuthorize("hasRole('SUPER_ADMIN') or hasAuthority('CLASS_UPDATE')")
     public CourseSection update(@PathVariable UUID id, @RequestBody CourseSection cs) {
         return service.update(id, cs);
     }
 
     @DeleteMapping("/{id}")
-    @PreAuthorize("hasAnyRole('SUPER_ADMIN','ACADEMIC_AFFAIRS') or hasAuthority('CLASS_DELETE')")
+    @PreAuthorize("hasRole('SUPER_ADMIN') or hasAuthority('CLASS_DELETE')")
     public void delete(@PathVariable UUID id) {
         service.delete(id);
     }
 
     @GetMapping("/search")
-    @PreAuthorize("hasAnyRole('SUPER_ADMIN','ACADEMIC_AFFAIRS','LECTURER') or hasAuthority('CLASS_VIEW')")
+    @PreAuthorize("hasRole('SUPER_ADMIN') or hasAuthority('CLASS_VIEW')")
     public Page<CourseSection> search(
         @RequestParam(name = "keyword", required = false) String keyword,
         @RequestParam(name = "page", defaultValue = "0") int page,

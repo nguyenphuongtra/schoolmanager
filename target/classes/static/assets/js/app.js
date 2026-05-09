@@ -472,11 +472,11 @@ document.addEventListener('DOMContentLoaded', function () {
       return;
     }
 
-    if (moduleName === 'courseSections' && !auth.canManageCourseSections()) {
+    if (moduleName === 'courseSections' && (!auth.canManageCourseSections() || auth.isLecturerOnly())) {
       return;
     }
 
-    if (moduleName === 'schedule' && !auth.canViewSchedule()) {
+    if (moduleName === 'schedule' && (!auth.canViewSchedule() || auth.isLecturerOnly())) {
       return;
     }
 
@@ -488,8 +488,20 @@ document.addEventListener('DOMContentLoaded', function () {
       return;
     }
 
-    if ((moduleName === 'lecturerSchedule' || moduleName === 'lecturerCourseSections') && !auth.isLecturerOnly() && !auth.isSuperAdmin()) {
+    if (moduleName === 'semesters' && !auth.canManageSemesters()) {
       return;
+    }
+
+    if (moduleName === 'students' && !auth.canManageStudents()) {
+      return;
+    }
+
+    if (moduleName === 'lecturerSchedule' && (!auth.isLecturerOnly() || !auth.hasPermission('SCHEDULE_VIEW'))) {
+      if (!auth.isSuperAdmin()) return;
+    }
+
+    if (moduleName === 'lecturerCourseSections' && (!auth.isLecturerOnly() || !auth.hasPermission('CLASS_VIEW'))) {
+      if (!auth.isSuperAdmin()) return;
     }
 
     state.activeModule = moduleName;

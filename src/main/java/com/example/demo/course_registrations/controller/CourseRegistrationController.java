@@ -18,7 +18,7 @@ import org.springframework.security.access.prepost.PreAuthorize;
 @RestController
 @RequestMapping("/api/registrations")
 @CrossOrigin(origins = "*")
-@PreAuthorize("hasRole('STUDENT')")
+@PreAuthorize("hasRole('SUPER_ADMIN') or hasAuthority('SCHEDULE_VIEW')")
 public class CourseRegistrationController {
 
     private final CourseRegistrationService service;

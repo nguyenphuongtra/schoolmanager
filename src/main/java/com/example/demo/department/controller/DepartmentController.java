@@ -31,37 +31,37 @@ public class DepartmentController {
     }
 
     @GetMapping
-    @PreAuthorize("hasAnyRole('SUPER_ADMIN','ACADEMIC_AFFAIRS','STUDENT') or hasAuthority('DEPARTMENT_VIEW')")
+    @PreAuthorize("hasRole('SUPER_ADMIN') or hasAuthority('DEPARTMENT_VIEW')")
     public List<Department> getAll() {
         return service.getAll();
     }
 
     @GetMapping("/{id}")
-    @PreAuthorize("hasAnyRole('SUPER_ADMIN','ACADEMIC_AFFAIRS') or hasAuthority('DEPARTMENT_VIEW')")
+    @PreAuthorize("hasRole('SUPER_ADMIN') or hasAuthority('DEPARTMENT_VIEW')")
     public Department getById(@PathVariable UUID id) {
         return service.getById(id);
     }
 
     @PostMapping
-    @PreAuthorize("hasAnyRole('SUPER_ADMIN','ACADEMIC_AFFAIRS') or hasAuthority('DEPARTMENT_CREATE')")
+    @PreAuthorize("hasRole('SUPER_ADMIN') or hasAuthority('DEPARTMENT_CREATE')")
     public Department create(@RequestBody Department department) {
         return service.create(department);
     }
 
     @PutMapping("/{id}")
-    @PreAuthorize("hasAnyRole('SUPER_ADMIN','ACADEMIC_AFFAIRS') or hasAuthority('DEPARTMENT_UPDATE')")
+    @PreAuthorize("hasRole('SUPER_ADMIN') or hasAuthority('DEPARTMENT_UPDATE')")
     public Department update(@PathVariable UUID id, @RequestBody Department department) {
         return service.update(id, department);
     }
 
     @DeleteMapping("/{id}")
-    @PreAuthorize("hasAnyRole('SUPER_ADMIN','ACADEMIC_AFFAIRS') or hasAuthority('DEPARTMENT_DELETE')")
+    @PreAuthorize("hasRole('SUPER_ADMIN') or hasAuthority('DEPARTMENT_DELETE')")
     public void delete(@PathVariable UUID id) {
         service.delete(id);
     }
 
     @GetMapping("/search")
-    @PreAuthorize("hasAnyRole('SUPER_ADMIN','ACADEMIC_AFFAIRS') or hasAuthority('DEPARTMENT_VIEW')")
+    @PreAuthorize("hasRole('SUPER_ADMIN') or hasAuthority('DEPARTMENT_VIEW')")
     public Page<Department> search(
         @RequestParam(name = "keyword", required = false) String keyword,
         @RequestParam(name = "page", defaultValue = "0") int page,

@@ -42,11 +42,11 @@ export function createAuthFeature(context) {
   }
 
   function canManageMajors() {
-    return isSuperAdmin() || hasPermission('DEPARTMENT_VIEW');
+    return isSuperAdmin() || hasPermission('MAJOR_VIEW');
   }
 
   function canManageTrainingPrograms() {
-    return isSuperAdmin() || hasPermission('DEPARTMENT_VIEW');
+    return isSuperAdmin() || hasPermission('PROGRAM_VIEW');
   }
 
   function canManageUserRoles() {
@@ -70,7 +70,7 @@ export function createAuthFeature(context) {
   }
 
   function canManageSemesters() {
-    return isSuperAdmin() || hasPermission('COURSE_VIEW');
+    return isSuperAdmin() || hasPermission('SEMESTER_VIEW');
   }
 
   function canManageGrades() {
@@ -198,37 +198,41 @@ export function createAuthFeature(context) {
     // Students nav
     refs.navStudents.closest('li').classList.toggle('d-none', !canManageStudents());
     // Department / Major / Training Programs
-    refs.navDepartments.classList.toggle('d-none', !canManageDepartments());
-    refs.navMajors.classList.toggle('d-none', !canManageMajors());
-    refs.navTrainingPrograms.classList.toggle('d-none', !canManageTrainingPrograms());
+    refs.navDepartments.closest('li').classList.toggle('d-none', !canManageDepartments());
+    refs.navMajors.closest('li').classList.toggle('d-none', !canManageMajors());
+    refs.navTrainingPrograms.closest('li').classList.toggle('d-none', !canManageTrainingPrograms());
     // Semesters
-    if (refs.navSemesters) refs.navSemesters.classList.toggle('d-none', !canManageSemesters());
+    if (refs.navSemesters) refs.navSemesters.closest('li').classList.toggle('d-none', !canManageSemesters());
     // Schedule (admin-only for now)
-    refs.navSchedule.closest('li').classList.toggle('d-none', !canViewSchedule());
+    const showAdminSchedule = isSuperAdmin() || (!lecturerOnly && hasPermission('SCHEDULE_VIEW'));
+    refs.navSchedule.closest('li').classList.toggle('d-none', !showAdminSchedule);
     // Courses
     refs.navCourses.closest('li').classList.toggle('d-none', !canManageCourses());
     // User roles
-    if (refs.navUserRoles) refs.navUserRoles.classList.toggle('d-none', !canManageUserRoles());
+    if (refs.navUserRoles) refs.navUserRoles.closest('li').classList.toggle('d-none', !canManageUserRoles());
     // Role permissions
-    if (refs.navRolePermissions) refs.navRolePermissions.classList.toggle('d-none', !isSuperAdmin());
+    if (refs.navRolePermissions) refs.navRolePermissions.closest('li').classList.toggle('d-none', !isSuperAdmin());
     // Employees
-    if (refs.navEmployees) refs.navEmployees.classList.toggle('d-none', !canManageEmployees());
+    if (refs.navEmployees) refs.navEmployees.closest('li').classList.toggle('d-none', !canManageEmployees());
     // Course Sections
-    if (refs.navCourseSections) refs.navCourseSections.classList.toggle('d-none', !canManageCourseSections());
+    const showAdminCourseSections = isSuperAdmin() || (!lecturerOnly && hasPermission('CLASS_VIEW'));
+    if (refs.navCourseSections) refs.navCourseSections.closest('li').classList.toggle('d-none', !showAdminCourseSections);
 
     // Lecturer-only items
     if (refs.navLecturerSchedule) {
-      refs.navLecturerSchedule.closest('li').classList.toggle('d-none', !lecturerOnly);
+      const showLecturerSchedule = lecturerOnly && hasPermission('SCHEDULE_VIEW');
+      refs.navLecturerSchedule.closest('li').classList.toggle('d-none', !showLecturerSchedule);
     }
     if (refs.navLecturerCourseSections) {
-      refs.navLecturerCourseSections.closest('li').classList.toggle('d-none', !lecturerOnly);
+      const showLecturerCourseSections = lecturerOnly && hasPermission('CLASS_VIEW');
+      refs.navLecturerCourseSections.closest('li').classList.toggle('d-none', !showLecturerCourseSections);
     }
 
     // Grades: visible to LECTURER, SUPER_ADMIN, STUDENT, or anyone with GRADE_VIEW
-    if (refs.navGrades) refs.navGrades.classList.toggle('d-none', !canManageGrades());
+    if (refs.navGrades) refs.navGrades.closest('li').classList.toggle('d-none', !canManageGrades());
 
     // Profile: only for STUDENT
-    if (refs.navProfile) refs.navProfile.classList.toggle('d-none', !studentOnly);
+    if (refs.navProfile) refs.navProfile.closest('li').classList.toggle('d-none', !studentOnly);
 
     // Search / Add buttons
     refs.btnAdd.classList.toggle('d-none', !canManageStudents());

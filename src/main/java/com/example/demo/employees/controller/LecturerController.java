@@ -24,7 +24,7 @@ public class LecturerController {
     }
 
     @GetMapping("/my-course-sections")
-    @PreAuthorize("hasAnyRole('SUPER_ADMIN','LECTURER')")
+    @PreAuthorize("hasRole('SUPER_ADMIN') or hasAuthority('CLASS_VIEW')")
     public ResponseEntity<?> getMyCourseSections(
             @AuthenticationPrincipal AuthenticatedUser user,
             @RequestParam(name = "semesterId", required = false) UUID semesterId) {
@@ -39,7 +39,7 @@ public class LecturerController {
         return ResponseEntity.ok(sections);
     }
     @GetMapping("/my-schedule")
-    @PreAuthorize("hasAnyRole('SUPER_ADMIN','LECTURER')")
+    @PreAuthorize("hasRole('SUPER_ADMIN') or hasAuthority('SCHEDULE_VIEW')")
     public ResponseEntity<?> getMySchedule(
             @AuthenticationPrincipal AuthenticatedUser user,
             @RequestParam(name = "semesterId", required = false) UUID semesterId) {
@@ -55,7 +55,7 @@ public class LecturerController {
     }
 
     @GetMapping("/course-section/{courseSectionId}/students")
-    @PreAuthorize("hasAnyRole('SUPER_ADMIN','LECTURER')")
+    @PreAuthorize("hasRole('SUPER_ADMIN') or hasAuthority('CLASS_VIEW')")
     public ResponseEntity<?> getStudentsInCourseSection(
             @AuthenticationPrincipal AuthenticatedUser user,
             @PathVariable UUID courseSectionId) {

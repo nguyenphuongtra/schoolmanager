@@ -30,37 +30,37 @@ public class MajorController {
     }
 
     @GetMapping
-    @PreAuthorize("hasAnyRole('SUPER_ADMIN','ACADEMIC_AFFAIRS')")
+    @PreAuthorize("hasRole('SUPER_ADMIN') or hasAuthority('MAJOR_VIEW')")
     public List<Major> getAll() {
         return service.getAll();
     }
 
     @GetMapping("/{id}")
-    @PreAuthorize("hasAnyRole('SUPER_ADMIN','ACADEMIC_AFFAIRS')")
+    @PreAuthorize("hasRole('SUPER_ADMIN') or hasAuthority('MAJOR_VIEW')")
     public Major getById(@PathVariable UUID id) {
         return service.getById(id);
     }
 
     @PostMapping
-    @PreAuthorize("hasAnyRole('SUPER_ADMIN','ACADEMIC_AFFAIRS')")
+    @PreAuthorize("hasRole('SUPER_ADMIN') or hasAuthority('MAJOR_CREATE')")
     public Major create(@RequestBody Major major) {
         return service.create(major);
     }
 
     @PutMapping("/{id}")
-    @PreAuthorize("hasAnyRole('SUPER_ADMIN','ACADEMIC_AFFAIRS')")
+    @PreAuthorize("hasRole('SUPER_ADMIN') or hasAuthority('MAJOR_UPDATE')")
     public Major update(@PathVariable UUID id, @RequestBody Major major) {
         return service.update(id, major);
     }
 
     @DeleteMapping("/{id}")
-    @PreAuthorize("hasAnyRole('SUPER_ADMIN','ACADEMIC_AFFAIRS')")
+    @PreAuthorize("hasRole('SUPER_ADMIN') or hasAuthority('MAJOR_DELETE')")
     public void delete(@PathVariable UUID id) {
         service.delete(id);
     }
 
     @GetMapping("/search")
-    @PreAuthorize("hasAnyRole('SUPER_ADMIN','ACADEMIC_AFFAIRS')")
+    @PreAuthorize("hasRole('SUPER_ADMIN') or hasAuthority('MAJOR_VIEW')")
     public Page<Major> search(
         @RequestParam(name = "keyword", required = false) String keyword,
         @RequestParam(name = "page", defaultValue = "0") int page,
