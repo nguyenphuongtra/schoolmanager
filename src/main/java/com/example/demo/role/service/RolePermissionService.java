@@ -18,7 +18,7 @@ public class RolePermissionService {
     }
 
     public RolePermission assignPermission(UUID roleId, UUID permissionId) {
-        RolePermission rp = repository.findByRoleIdAndPermissionIdAndDeletedAtIsNull(roleId, permissionId)
+        RolePermission rp = repository.findByRoleIdAndPermissionId(roleId, permissionId)
             .orElseGet(() -> new RolePermission(roleId, permissionId));
         rp.setIsActive(true);
         rp.setDeletedAt(null);

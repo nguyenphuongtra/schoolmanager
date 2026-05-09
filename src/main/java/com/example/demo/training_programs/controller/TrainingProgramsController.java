@@ -31,37 +31,37 @@ public class TrainingProgramsController {
     }
 
     @GetMapping
-    @PreAuthorize("hasAnyRole('SUPER_ADMIN','ACADEMIC_AFFAIRS','STUDENT') or hasAuthority('DEPT_VIEW')")
+    @PreAuthorize("hasAnyRole('SUPER_ADMIN','ACADEMIC_AFFAIRS','STUDENT') or hasAuthority('DEPARTMENT_VIEW')")
     public List<TrainingProgram> getAll() {
         return service.getAll();
     }
 
     @GetMapping("/{id}")
-    @PreAuthorize("hasAnyRole('SUPER_ADMIN','ACADEMIC_AFFAIRS') or hasAuthority('DEPT_VIEW')")
+    @PreAuthorize("hasAnyRole('SUPER_ADMIN','ACADEMIC_AFFAIRS') or hasAuthority('DEPARTMENT_VIEW')")
     public TrainingProgram getById(@PathVariable UUID id) {
         return service.getById(id);
     }
 
     @PostMapping
-    @PreAuthorize("hasAnyRole('SUPER_ADMIN','ACADEMIC_AFFAIRS') or hasAuthority('DEPT_CREATE')")
+    @PreAuthorize("hasAnyRole('SUPER_ADMIN','ACADEMIC_AFFAIRS') or hasAuthority('DEPARTMENT_CREATE')")
     public TrainingProgram create(@RequestBody TrainingProgram trainingProgram) {
         return service.create(trainingProgram);
     }
 
     @PutMapping("/{id}")
-    @PreAuthorize("hasAnyRole('SUPER_ADMIN','ACADEMIC_AFFAIRS') or hasAuthority('DEPT_EDIT')")
+    @PreAuthorize("hasAnyRole('SUPER_ADMIN','ACADEMIC_AFFAIRS') or hasAuthority('DEPARTMENT_UPDATE')")
     public TrainingProgram update(@PathVariable UUID id, @RequestBody TrainingProgram trainingProgram) {
         return service.update(id, trainingProgram);
     }
 
     @DeleteMapping("/{id}")
-    @PreAuthorize("hasAnyRole('SUPER_ADMIN','ACADEMIC_AFFAIRS') or hasAuthority('DEPT_DELETE')")
+    @PreAuthorize("hasAnyRole('SUPER_ADMIN','ACADEMIC_AFFAIRS') or hasAuthority('DEPARTMENT_DELETE')")
     public void delete(@PathVariable UUID id) {
         service.delete(id);
     }
 
     @GetMapping("/search")
-    @PreAuthorize("hasAnyRole('SUPER_ADMIN','ACADEMIC_AFFAIRS') or hasAuthority('DEPT_VIEW')")
+    @PreAuthorize("hasAnyRole('SUPER_ADMIN','ACADEMIC_AFFAIRS') or hasAuthority('DEPARTMENT_VIEW')")
     public Page<TrainingProgram> search(
         @RequestParam(name = "keyword", required = false) String keyword,
         @RequestParam(name = "page", defaultValue = "0") int page,
@@ -71,13 +71,13 @@ public class TrainingProgramsController {
     }
 
     @GetMapping("/department/{departmentId}")
-    @PreAuthorize("hasAnyRole('SUPER_ADMIN','ACADEMIC_AFFAIRS') or hasAuthority('DEPT_VIEW')")
+    @PreAuthorize("hasAnyRole('SUPER_ADMIN','ACADEMIC_AFFAIRS') or hasAuthority('DEPARTMENT_VIEW')")
     public List<TrainingProgram> getByDepartmentId(@PathVariable UUID departmentId) {
         return service.getByDepartmentId(departmentId);
     }
 
     @GetMapping("/major/{majorId}")
-    @PreAuthorize("hasAnyRole('SUPER_ADMIN','ACADEMIC_AFFAIRS') or hasAuthority('DEPT_VIEW')")
+    @PreAuthorize("hasAnyRole('SUPER_ADMIN','ACADEMIC_AFFAIRS') or hasAuthority('DEPARTMENT_VIEW')")
     public List<TrainingProgram> getByMajorId(@PathVariable UUID majorId) {
         return service.getByMajorId(majorId);
     }

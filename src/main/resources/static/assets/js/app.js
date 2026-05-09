@@ -10,6 +10,7 @@ import { createSemestersFeature } from './features/semesters.js';
 import { createScheduleFeature } from './features/schedule.js';
 import { createCoursesFeature } from './features/courses.js';
 import { createUserRolesFeature } from './features/user-roles.js';
+import { createRolePermissionsFeature } from './features/role-permissions.js';
 import { createEmployeesFeature } from './features/employees.js';
 import { createGradesFeature } from './features/grades.js';
 import { createProfileFeature } from './features/profile.js';
@@ -69,6 +70,7 @@ document.addEventListener('DOMContentLoaded', function () {
     schedule.showUnauthorizedState();
     courses.showUnauthorizedState();
     userRoles.showUnauthorizedState();
+    if (typeof rolePermissions !== 'undefined') rolePermissions.showUnauthorizedState();
     if (typeof employees !== 'undefined') employees.showUnauthorizedState();
     if (typeof grades !== 'undefined') grades.showUnauthorizedState();
     if (typeof profile !== 'undefined') profile.showUnauthorizedState();
@@ -96,6 +98,7 @@ document.addEventListener('DOMContentLoaded', function () {
     schedule.resetLoggedOutState();
     courses.resetLoggedOutState();
     userRoles.resetLoggedOutState();
+    if (typeof rolePermissions !== 'undefined') rolePermissions.resetLoggedOutState && rolePermissions.resetLoggedOutState();
     if (typeof employees !== 'undefined') employees.resetLoggedOutState();
     if (typeof grades !== 'undefined') grades.resetLoggedOutState();
     if (typeof profile !== 'undefined') profile.resetLoggedOutState();
@@ -202,6 +205,14 @@ document.addEventListener('DOMContentLoaded', function () {
     clearError,
   });
 
+  const rolePermissions = createRolePermissionsFeature({
+    state,
+    refs,
+    auth,
+    showError,
+    clearError,
+  });
+
   const employees = createEmployeesFeature({
     state,
     refs,
@@ -258,6 +269,7 @@ document.addEventListener('DOMContentLoaded', function () {
     const isSchedule = state.activeModule === 'schedule';
     const isCourses = state.activeModule === 'courses';
     const isUserRoles = state.activeModule === 'userRoles';
+    const isRolePermissions = state.activeModule === 'rolePermissions';
     const isEmployees = state.activeModule === 'employees';
     const isGrades = state.activeModule === 'grades';
     const isProfile = state.activeModule === 'profile';
@@ -265,7 +277,7 @@ document.addEventListener('DOMContentLoaded', function () {
     const isLecturerSchedule = state.activeModule === 'lecturerSchedule';
     const isLecturerCourseSections = state.activeModule === 'lecturerCourseSections';
 
-    const isNotStudents = isDepartments || isMajors || isTrainingPrograms || isSemesters || isSchedule || isCourses || isUserRoles || isEmployees || isGrades || isProfile || isCourseSections || isLecturerSchedule || isLecturerCourseSections;
+    const isNotStudents = isDepartments || isMajors || isTrainingPrograms || isSemesters || isSchedule || isCourses || isUserRoles || isRolePermissions || isEmployees || isGrades || isProfile || isCourseSections || isLecturerSchedule || isLecturerCourseSections;
     refs.studentsSection.classList.toggle('d-none', isNotStudents);
     refs.departmentsSection.classList.toggle('d-none', !isDepartments);
     refs.majorsSection.classList.toggle('d-none', !isMajors);
@@ -274,6 +286,7 @@ document.addEventListener('DOMContentLoaded', function () {
     refs.scheduleSection.classList.toggle('d-none', !isSchedule);
     refs.coursesSection.classList.toggle('d-none', !isCourses);
     refs.userRolesSection.classList.toggle('d-none', !isUserRoles);
+    if (refs.rolePermissionsSection) refs.rolePermissionsSection.classList.toggle('d-none', !isRolePermissions);
     if (refs.employeesSection) refs.employeesSection.classList.toggle('d-none', !isEmployees);
     if (refs.gradesSection) refs.gradesSection.classList.toggle('d-none', !isGrades);
     if (refs.profileSection) refs.profileSection.classList.toggle('d-none', !isProfile);
@@ -289,6 +302,7 @@ document.addEventListener('DOMContentLoaded', function () {
     refs.navSchedule.classList.toggle('active', isSchedule);
     refs.navCourses.classList.toggle('active', isCourses);
     if (refs.navUserRoles) refs.navUserRoles.classList.toggle('active', isUserRoles);
+    if (refs.navRolePermissions) refs.navRolePermissions.classList.toggle('active', isRolePermissions);
     if (refs.navEmployees) refs.navEmployees.classList.toggle('active', isEmployees);
     if (refs.navGrades) refs.navGrades.classList.toggle('active', isGrades);
     if (refs.navProfile) refs.navProfile.classList.toggle('active', isProfile);
@@ -304,6 +318,7 @@ document.addEventListener('DOMContentLoaded', function () {
       schedule: 'Lịch học tuần',
       courses: 'Danh sách môn học',
       userRoles: 'Phân quyền người dùng',
+      rolePermissions: 'Thiết lập quyền',
       employees: 'Giảng viên',
       grades: 'Quản lý Điểm số',
       profile: 'Hồ sơ Sinh viên',
@@ -319,6 +334,7 @@ document.addEventListener('DOMContentLoaded', function () {
       schedule: 'Schedule',
       courses: 'Courses',
       userRoles: 'User Roles',
+      rolePermissions: 'Role Permissions',
       employees: 'Employees',
       grades: 'Grades',
       profile: 'Profile',
@@ -357,12 +373,12 @@ document.addEventListener('DOMContentLoaded', function () {
       return;
     }
 
-    if (state.activeModule === 'schedule') {
+    if (state.activeModule === 'schedule' && auth.canViewSchedule()) {
       schedule.loadSchedule();
       return;
     }
 
-    if (state.activeModule === 'courses') {
+    if (state.activeModule === 'courses' && auth.canManageCourses()) {
       courses.loadCourses();
       return;
     }
@@ -372,12 +388,17 @@ document.addEventListener('DOMContentLoaded', function () {
       return;
     }
 
-    if (state.activeModule === 'employees' && !auth.isStudentOnly()) {
+    if (state.activeModule === 'rolePermissions' && auth.isSuperAdmin()) {
+      rolePermissions.loadInitialData();
+      return;
+    }
+
+    if (state.activeModule === 'employees' && auth.canManageEmployees()) {
       employees.loadEmployees();
       return;
     }
 
-    if (state.activeModule === 'grades') {
+    if (state.activeModule === 'grades' && auth.canManageGrades()) {
       grades.loadGrades();
       return;
     }
@@ -387,7 +408,7 @@ document.addEventListener('DOMContentLoaded', function () {
       return;
     }
 
-    if (state.activeModule === 'courseSections' && !auth.isStudentOnly()) {
+    if (state.activeModule === 'courseSections' && auth.canManageCourseSections()) {
       courseSections.loadCourseSections();
       return;
     }
@@ -439,7 +460,11 @@ document.addEventListener('DOMContentLoaded', function () {
       return;
     }
 
-    if (moduleName === 'employees' && auth.isStudentOnly()) {
+    if (moduleName === 'rolePermissions' && !auth.isSuperAdmin()) {
+      return;
+    }
+
+    if (moduleName === 'employees' && !auth.canManageEmployees()) {
       return;
     }
 
@@ -447,7 +472,19 @@ document.addEventListener('DOMContentLoaded', function () {
       return;
     }
 
-    if (moduleName === 'courseSections' && auth.isStudentOnly()) {
+    if (moduleName === 'courseSections' && !auth.canManageCourseSections()) {
+      return;
+    }
+
+    if (moduleName === 'schedule' && !auth.canViewSchedule()) {
+      return;
+    }
+
+    if (moduleName === 'courses' && !auth.canManageCourses()) {
+      return;
+    }
+
+    if (moduleName === 'grades' && !auth.canManageGrades()) {
       return;
     }
 
@@ -501,6 +538,13 @@ document.addEventListener('DOMContentLoaded', function () {
       refs.navUserRoles.addEventListener('click', function (event) {
         event.preventDefault();
         switchModule('userRoles');
+      });
+    }
+
+    if (refs.navRolePermissions) {
+      refs.navRolePermissions.addEventListener('click', function (event) {
+        event.preventDefault();
+        switchModule('rolePermissions');
       });
     }
 
@@ -568,6 +612,7 @@ document.addEventListener('DOMContentLoaded', function () {
   schedule.bindEvents();
   courses.bindEvents();
   userRoles.bindEvents();
+  rolePermissions.bindEvents();
   employees.bindEvents();
   grades.bindEvents();
   profile.bindEvents();

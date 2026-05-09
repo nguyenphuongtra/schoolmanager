@@ -177,10 +177,9 @@ export function createGradesFeature(context) {
     sections.forEach(function (cs) {
       const opt = document.createElement('option');
       opt.value = cs.id;
-      const label = cs.code || '';
-      const courseName = cs.courseName ? ' - ' + cs.courseName : '';
+      const courseName = cs.courseName || cs.code || '';
       const semName = cs.semesterName ? ' (' + cs.semesterName + ')' : '';
-      opt.textContent = label + courseName + semName;
+      opt.textContent = courseName + semName;
       semSelect.appendChild(opt);
     });
 

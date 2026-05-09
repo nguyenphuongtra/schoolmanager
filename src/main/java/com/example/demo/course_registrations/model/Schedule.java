@@ -7,10 +7,7 @@ import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.UUID;
 
-/**
- * Entity ánh xạ bảng schedules - Lịch học của lớp học phần
- * Chứa thông tin: thứ trong tuần (day_of_week), tiết bắt đầu/kết thúc
- */
+
 @Entity
 @Table(name = "schedules")
 public class Schedule {

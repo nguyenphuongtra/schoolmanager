@@ -31,26 +31,26 @@ public class GradeController {
     }
 
     @GetMapping("/components/{courseSectionId}")
-    @PreAuthorize("hasAnyRole('SUPER_ADMIN','LECTURER') or hasAuthority('grade:read')")
+    @PreAuthorize("hasAnyRole('SUPER_ADMIN','LECTURER') or hasAuthority('GRADE_VIEW')")
     public List<GradeComponent> getComponents(@PathVariable UUID courseSectionId) {
         return gradeService.getComponents(courseSectionId);
     }
 
 
     @GetMapping("/course-section/{courseSectionId}")
-    @PreAuthorize("hasAnyRole('SUPER_ADMIN','LECTURER') or hasAuthority('grade:read')")
+    @PreAuthorize("hasAnyRole('SUPER_ADMIN','LECTURER') or hasAuthority('GRADE_VIEW')")
     public Map<String, Object> getGradesForCourseSection(@PathVariable UUID courseSectionId) {
         return gradeService.getGradesForCourseSection(courseSectionId);
     }
 
     @PostMapping
-    @PreAuthorize("hasAnyRole('SUPER_ADMIN','LECTURER') or hasAuthority('grade:write')")
+    @PreAuthorize("hasAnyRole('SUPER_ADMIN','LECTURER') or hasAuthority('GRADE_INPUT')")
     public StudentGrade saveGrade(@RequestBody GradeEntryRequest request) {
         return gradeService.saveGrade(request);
     }
 
     @GetMapping("/transcript")
-    @PreAuthorize("hasRole('STUDENT') or hasAuthority('grade:read:self')")
+    @PreAuthorize("hasRole('STUDENT') or hasAuthority('GRADE_VIEW')")
     public ResponseEntity<TranscriptDTO> getOwnTranscript(@AuthenticationPrincipal AuthenticatedUser user) {
         if (user == null) {
             return ResponseEntity.status(401).build();
@@ -67,7 +67,7 @@ public class GradeController {
 
 
     @GetMapping("/transcript/{studentId}")
-    @PreAuthorize("hasAnyRole('SUPER_ADMIN','ACADEMIC_AFFAIRS','LECTURER') or hasAuthority('grade:read')")
+    @PreAuthorize("hasAnyRole('SUPER_ADMIN','ACADEMIC_AFFAIRS','LECTURER') or hasAuthority('GRADE_VIEW')")
     public ResponseEntity<TranscriptDTO> getStudentTranscript(@PathVariable UUID studentId) {
         TranscriptDTO transcript = gradeService.getTranscript(studentId);
         if (transcript == null) {

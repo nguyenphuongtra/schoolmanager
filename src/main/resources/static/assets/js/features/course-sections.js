@@ -9,7 +9,7 @@ export function createCourseSectionsFeature(context) {
   let employeeList = [];
 
   function canManage() {
-    return auth.hasRole('SUPER_ADMIN') || auth.hasRole('ACADEMIC_AFFAIRS');
+    return auth.canManageCourseSections();
   }
 
   async function loadCourseSections(page) {

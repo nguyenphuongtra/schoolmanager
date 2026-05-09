@@ -11,10 +11,6 @@ import org.hibernate.annotations.UuidGenerator;
 import java.time.LocalDateTime;
 import java.util.UUID;
 
-/**
- * Entity ánh xạ bảng course_sections - Lớp học phần
- * Sử dụng @Version cho Optimistic Locking khi nhiều SV cùng đăng ký
- */
 @Entity
 @Table(name = "course_sections")
 public class CourseSection {

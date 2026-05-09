@@ -6,10 +6,7 @@ import org.hibernate.annotations.UuidGenerator;
 import java.time.LocalDateTime;
 import java.util.UUID;
 
-/**
- * Entity ánh xạ bảng student_course_sections - Đăng ký học phần của sinh viên
- * Status: PENDING (chờ xử lý), ENROLLED (đã đăng ký), DROPPED (đã hủy)
- */
+
 @Entity
 @Table(name = "student_course_sections")
 public class StudentCourseSection {

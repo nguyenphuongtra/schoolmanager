@@ -30,7 +30,7 @@ public class CourseController {
     }
 
     @GetMapping("/department/{departmentId}")
-    @PreAuthorize("hasAnyRole('SUPER_ADMIN','ACADEMIC_AFFAIRS') or hasAuthority('DEPT_VIEW') or hasAuthority('COURSE_VIEW')")
+    @PreAuthorize("hasAnyRole('SUPER_ADMIN','ACADEMIC_AFFAIRS') or hasAuthority('DEPARTMENT_VIEW') or hasAuthority('COURSE_VIEW')")
     public List<Course> getByDepartment(@PathVariable UUID departmentId) {
         return service.getByDepartmentId(departmentId);
     }

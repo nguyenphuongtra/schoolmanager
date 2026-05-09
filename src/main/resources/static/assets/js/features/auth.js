@@ -17,6 +17,11 @@ export function createAuthFeature(context) {
     return roles.some(r => r === roleName);
   }
 
+  function hasPermission(permCode) {
+    const perms = state.authState && Array.isArray(state.authState.permissions) ? state.authState.permissions : [];
+    return perms.some(p => p === permCode);
+  }
+
   function isSuperAdmin() {
     return hasRole('SUPER_ADMIN');
   }
@@ -33,19 +38,47 @@ export function createAuthFeature(context) {
   }
 
   function canManageDepartments() {
-    return isSuperAdmin();
+    return isSuperAdmin() || hasPermission('DEPARTMENT_VIEW');
   }
 
   function canManageMajors() {
-    return isSuperAdmin();
+    return isSuperAdmin() || hasPermission('DEPARTMENT_VIEW');
   }
 
   function canManageTrainingPrograms() {
-    return isSuperAdmin();
+    return isSuperAdmin() || hasPermission('DEPARTMENT_VIEW');
   }
 
   function canManageUserRoles() {
-    return isSuperAdmin();
+    return isSuperAdmin() || hasPermission('ROLE_VIEW');
+  }
+
+  function canManageStudents() {
+    return isSuperAdmin() || hasPermission('STUDENT_VIEW');
+  }
+
+  function canManageEmployees() {
+    return isSuperAdmin() || hasPermission('LECTURER_VIEW');
+  }
+
+  function canManageCourseSections() {
+    return isSuperAdmin() || hasPermission('CLASS_VIEW');
+  }
+
+  function canManageCourses() {
+    return isSuperAdmin() || hasPermission('COURSE_VIEW');
+  }
+
+  function canManageSemesters() {
+    return isSuperAdmin() || hasPermission('COURSE_VIEW');
+  }
+
+  function canManageGrades() {
+    return isSuperAdmin() || hasPermission('GRADE_VIEW');
+  }
+
+  function canViewSchedule() {
+    return isSuperAdmin() || hasPermission('SCHEDULE_VIEW');
   }
 
   function setAuthState(data) {
@@ -160,19 +193,28 @@ export function createAuthFeature(context) {
     const lecturerOnly = isLecturerOnly();
     const studentOnly = isStudentOnly();
 
-    // ===== Sidebar visibility by role =====
+    // ===== Sidebar visibility by permission =====
 
-    // Admin-only items: hidden for LECTURER_ONLY and STUDENT
-    refs.navStudents.closest('li').classList.toggle('d-none', lecturerOnly || studentOnly);
+    // Students nav
+    refs.navStudents.closest('li').classList.toggle('d-none', !canManageStudents());
+    // Department / Major / Training Programs
     refs.navDepartments.classList.toggle('d-none', !canManageDepartments());
     refs.navMajors.classList.toggle('d-none', !canManageMajors());
     refs.navTrainingPrograms.classList.toggle('d-none', !canManageTrainingPrograms());
-    if (refs.navSemesters) refs.navSemesters.classList.toggle('d-none', lecturerOnly || studentOnly);
-    refs.navSchedule.closest('li').classList.toggle('d-none', lecturerOnly);
-    refs.navCourses.closest('li').classList.toggle('d-none', lecturerOnly || studentOnly);
+    // Semesters
+    if (refs.navSemesters) refs.navSemesters.classList.toggle('d-none', !canManageSemesters());
+    // Schedule (admin-only for now)
+    refs.navSchedule.closest('li').classList.toggle('d-none', !canViewSchedule());
+    // Courses
+    refs.navCourses.closest('li').classList.toggle('d-none', !canManageCourses());
+    // User roles
     if (refs.navUserRoles) refs.navUserRoles.classList.toggle('d-none', !canManageUserRoles());
-    if (refs.navEmployees) refs.navEmployees.classList.toggle('d-none', lecturerOnly || studentOnly);
-    if (refs.navCourseSections) refs.navCourseSections.classList.toggle('d-none', lecturerOnly || studentOnly);
+    // Role permissions
+    if (refs.navRolePermissions) refs.navRolePermissions.classList.toggle('d-none', !isSuperAdmin());
+    // Employees
+    if (refs.navEmployees) refs.navEmployees.classList.toggle('d-none', !canManageEmployees());
+    // Course Sections
+    if (refs.navCourseSections) refs.navCourseSections.classList.toggle('d-none', !canManageCourseSections());
 
     // Lecturer-only items
     if (refs.navLecturerSchedule) {
@@ -182,26 +224,24 @@ export function createAuthFeature(context) {
       refs.navLecturerCourseSections.closest('li').classList.toggle('d-none', !lecturerOnly);
     }
 
-    // Grades: visible to LECTURER (only + admin) and STUDENT
-    if (refs.navGrades) refs.navGrades.classList.toggle('d-none', studentOnly && !lecturerOnly && !isSuperAdmin() ? true : false);
-    // Actually grades should be visible to LECTURER, SUPER_ADMIN and STUDENT
-    if (refs.navGrades) refs.navGrades.classList.toggle('d-none', false);
+    // Grades: visible to LECTURER, SUPER_ADMIN, STUDENT, or anyone with GRADE_VIEW
+    if (refs.navGrades) refs.navGrades.classList.toggle('d-none', !canManageGrades());
 
     // Profile: only for STUDENT
     if (refs.navProfile) refs.navProfile.classList.toggle('d-none', !studentOnly);
 
     // Search / Add buttons
-    refs.btnAdd.classList.toggle('d-none', lecturerOnly || studentOnly);
-    refs.searchInput.disabled = lecturerOnly || studentOnly;
-    refs.searchInput.value = (lecturerOnly || studentOnly) ? '' : refs.searchInput.value;
+    refs.btnAdd.classList.toggle('d-none', !canManageStudents());
+    refs.searchInput.disabled = !canManageStudents();
+    refs.searchInput.value = !canManageStudents() ? '' : refs.searchInput.value;
     refs.searchInput.placeholder = studentOnly
       ? 'Sinh viên chỉ xem hồ sơ cá nhân'
       : (lecturerOnly ? '' : 'Tìm theo mã sinh viên / họ tên...');
-    refs.btnAddDepartment.classList.toggle('d-none', !canManageDepartments());
-    refs.btnAddMajor.classList.toggle('d-none', !canManageMajors());
-    refs.btnAddTrainingProgram.classList.toggle('d-none', !canManageTrainingPrograms());
-    if (refs.btnAddEmployee) refs.btnAddEmployee.classList.toggle('d-none', lecturerOnly || studentOnly);
-    if (refs.btnAddCourseSection) refs.btnAddCourseSection.classList.toggle('d-none', lecturerOnly || studentOnly);
+    refs.btnAddDepartment.classList.toggle('d-none', !(isSuperAdmin() || hasPermission('DEPARTMENT_CREATE')));
+    refs.btnAddMajor.classList.toggle('d-none', !(isSuperAdmin() || hasPermission('DEPARTMENT_CREATE')));
+    refs.btnAddTrainingProgram.classList.toggle('d-none', !(isSuperAdmin() || hasPermission('DEPARTMENT_CREATE')));
+    if (refs.btnAddEmployee) refs.btnAddEmployee.classList.toggle('d-none', !(isSuperAdmin() || hasPermission('LECTURER_CREATE')));
+    if (refs.btnAddCourseSection) refs.btnAddCourseSection.classList.toggle('d-none', !(isSuperAdmin() || hasPermission('CLASS_CREATE')));
     refs.departmentSearchInput.disabled = !canManageDepartments();
     refs.majorSearchInput.disabled = !canManageMajors();
     refs.trainingProgramSearchInput.disabled = !canManageTrainingPrograms();
@@ -275,9 +315,17 @@ export function createAuthFeature(context) {
     canManageMajors,
     canManageTrainingPrograms,
     canManageUserRoles,
+    canManageStudents,
+    canManageEmployees,
+    canManageCourseSections,
+    canManageCourses,
+    canManageSemesters,
+    canManageGrades,
+    canViewSchedule,
     clearLoginSuccess,
     getRoleHint,
     handleUnauthorized,
+    hasPermission,
     hasRole,
     isLecturer,
     isLecturerOnly,

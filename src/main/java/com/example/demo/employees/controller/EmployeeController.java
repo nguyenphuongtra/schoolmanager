@@ -30,37 +30,37 @@ public class EmployeeController {
     }
 
     @GetMapping
-    @PreAuthorize("hasAnyRole('SUPER_ADMIN','ACADEMIC_AFFAIRS') or hasAuthority('employee:read')")
+    @PreAuthorize("hasAnyRole('SUPER_ADMIN','ACADEMIC_AFFAIRS') or hasAuthority('LECTURER_VIEW')")
     public List<Employee> getAll() {
         return service.getAll();
     }
 
     @GetMapping("/{id}")
-    @PreAuthorize("hasAnyRole('SUPER_ADMIN','ACADEMIC_AFFAIRS') or hasAuthority('employee:read')")
+    @PreAuthorize("hasAnyRole('SUPER_ADMIN','ACADEMIC_AFFAIRS') or hasAuthority('LECTURER_VIEW')")
     public Employee getById(@PathVariable UUID id) {
         return service.getById(id);
     }
 
     @PostMapping
-    @PreAuthorize("hasAnyRole('SUPER_ADMIN','ACADEMIC_AFFAIRS') or hasAuthority('employee:create')")
+    @PreAuthorize("hasAnyRole('SUPER_ADMIN','ACADEMIC_AFFAIRS') or hasAuthority('LECTURER_CREATE')")
     public Employee create(@RequestBody Employee employee) {
         return service.create(employee);
     }
 
     @PutMapping("/{id}")
-    @PreAuthorize("hasAnyRole('SUPER_ADMIN','ACADEMIC_AFFAIRS') or hasAuthority('employee:update')")
+    @PreAuthorize("hasAnyRole('SUPER_ADMIN','ACADEMIC_AFFAIRS') or hasAuthority('LECTURER_UPDATE')")
     public Employee update(@PathVariable UUID id, @RequestBody Employee employee) {
         return service.update(id, employee);
     }
 
     @DeleteMapping("/{id}")
-    @PreAuthorize("hasAnyRole('SUPER_ADMIN','ACADEMIC_AFFAIRS') or hasAuthority('employee:delete')")
+    @PreAuthorize("hasAnyRole('SUPER_ADMIN','ACADEMIC_AFFAIRS') or hasAuthority('LECTURER_DELETE')")
     public void delete(@PathVariable UUID id) {
         service.delete(id);
     }
 
     @GetMapping("/search")
-    @PreAuthorize("hasAnyRole('SUPER_ADMIN','ACADEMIC_AFFAIRS') or hasAuthority('employee:read')")
+    @PreAuthorize("hasAnyRole('SUPER_ADMIN','ACADEMIC_AFFAIRS') or hasAuthority('LECTURER_VIEW')")
     public Page<Employee> search(
         @RequestParam(name = "keyword", required = false) String keyword,
         @RequestParam(name = "page", defaultValue = "0") int page,

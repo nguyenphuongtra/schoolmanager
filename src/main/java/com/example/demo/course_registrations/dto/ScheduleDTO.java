@@ -2,9 +2,7 @@ package com.example.demo.course_registrations.dto;
 
 import java.util.UUID;
 
-/**
- * DTO cho dữ liệu lịch học hiển thị trên calendar view
- */
+
 public class ScheduleDTO {
     private UUID sectionId;
     private String sectionCode;

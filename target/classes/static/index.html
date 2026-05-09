@@ -222,7 +222,13 @@
             <li class="nav-item d-none" id="navUserRoles">
               <a href="#" class="nav-link">
                 <i class="nav-icon bi bi-shield-lock"></i>
-                <p>Phân quyền</p>
+                <p>Phân quyền Người dùng</p>
+              </a>
+            </li>
+            <li class="nav-item d-none" id="navRolePermissions">
+              <a href="#" class="nav-link">
+                <i class="nav-icon bi bi-key"></i>
+                <p>Thiết lập quyền</p>
               </a>
             </li>
           </ul>
@@ -678,6 +684,37 @@
             </div>
             <div class="card-footer text-end">
               <small class="text-muted" id="userRolesPaginationInfo"></small>
+            </div>
+          </div>
+
+          <!-- ============================================== -->
+          <!-- ROLE PERMISSIONS SECTION                       -->
+          <!-- ============================================== -->
+          <div class="card d-none" id="rolePermissionsSection">
+            <div class="card-header bg-white py-3">
+              <h3 class="card-title fw-bold m-0"><i class="bi bi-key me-2 text-primary"></i>Thiết lập quyền cho Vai trò</h3>
+            </div>
+            <div class="card-body">
+              <div class="row">
+                <div class="col-md-4 border-end">
+                  <h6 class="fw-bold mb-3 text-secondary">CHỌN VAI TRÒ</h6>
+                  <div class="list-group" id="rpRoleList">
+                    <!-- Danh sách role sẽ được render ở đây -->
+                    <div class="text-muted small p-2">Đang tải...</div>
+                  </div>
+                </div>
+                <div class="col-md-8">
+                  <div class="d-flex justify-content-between align-items-center mb-3">
+                    <h6 class="fw-bold m-0 text-secondary" id="rpSelectedRoleTitle">DANH SÁCH QUYỀN</h6>
+                  </div>
+                  <div id="rpPermissionsContainer">
+                    <div class="text-center text-muted p-5">
+                      <i class="bi bi-arrow-left-circle fs-3 d-block mb-2 text-secondary"></i>
+                      Vui lòng chọn một vai trò bên trái để phân quyền
+                    </div>
+                  </div>
+                </div>
+              </div>
             </div>
           </div>
 

@@ -9,16 +9,18 @@ public class LoginResponse {
     private String username;
     private String fullName;
     private List<String> roles;
+    private List<String> permissions;
 
     public LoginResponse() {
     }
 
-    public LoginResponse(String token, UUID userId, String username, String fullName, List<String> roles) {
+    public LoginResponse(String token, UUID userId, String username, String fullName, List<String> roles, List<String> permissions) {
         this.token = token;
         this.userId = userId;
         this.username = username;
         this.fullName = fullName;
         this.roles = roles;
+        this.permissions = permissions;
     }
 
     public String getToken() {
@@ -59,5 +61,13 @@ public class LoginResponse {
 
     public void setRoles(List<String> roles) {
         this.roles = roles;
+    }
+
+    public List<String> getPermissions() {
+        return permissions;
+    }
+
+    public void setPermissions(List<String> permissions) {
+        this.permissions = permissions;
     }
 }

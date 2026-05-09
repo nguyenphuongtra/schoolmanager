@@ -34,20 +34,20 @@ public class StudentController {
 
     // GET ALL
     @GetMapping
-    @PreAuthorize("hasAnyRole('SUPER_ADMIN','ACADEMIC_AFFAIRS') or hasAuthority('student:read')")
+    @PreAuthorize("hasAnyRole('SUPER_ADMIN','ACADEMIC_AFFAIRS') or hasAuthority('STUDENT_VIEW')")
     public List<Student> getAll() {
         return service.getAll();
     }
 
     // GET BY ID
     @GetMapping("/{id}")
-    @PreAuthorize("hasAnyRole('SUPER_ADMIN','ACADEMIC_AFFAIRS') or hasAuthority('student:read') or ((hasRole('STUDENT') or hasAuthority('student:read:self')) and @studentSecurityService.isOwner(#id, authentication))")
+    @PreAuthorize("hasAnyRole('SUPER_ADMIN','ACADEMIC_AFFAIRS') or hasAuthority('STUDENT_VIEW') or ((hasRole('STUDENT') or hasAuthority('STUDENT_VIEW')) and @studentSecurityService.isOwner(#id, authentication))")
     public Student getById(@PathVariable UUID id) {
         return service.getById(id);
     }
 
     @GetMapping("/me")
-    @PreAuthorize("hasRole('STUDENT') or hasAuthority('student:read:self') or hasAuthority('student:update:self')")
+    @PreAuthorize("hasRole('STUDENT') or hasAuthority('STUDENT_VIEW') or hasAuthority('STUDENT_UPDATE')")
     public Student getCurrentStudent(@AuthenticationPrincipal AuthenticatedUser user) {
         if (user == null) {
             return null;
@@ -58,14 +58,14 @@ public class StudentController {
 
     // CREATE
     @PostMapping
-    @PreAuthorize("hasAnyRole('SUPER_ADMIN','ACADEMIC_AFFAIRS') or hasAuthority('student:create')")
+    @PreAuthorize("hasAnyRole('SUPER_ADMIN','ACADEMIC_AFFAIRS') or hasAuthority('STUDENT_CREATE')")
     public Student create(@RequestBody Student student) {
         return service.create(student);
     }
 
     // UPDATE
     @PutMapping("/{id}")
-    @PreAuthorize("hasAnyRole('SUPER_ADMIN','ACADEMIC_AFFAIRS') or hasAuthority('student:update') or ((hasRole('STUDENT') or hasAuthority('student:update:self')) and @studentSecurityService.isOwner(#id, authentication))")
+    @PreAuthorize("hasAnyRole('SUPER_ADMIN','ACADEMIC_AFFAIRS') or hasAuthority('STUDENT_UPDATE') or ((hasRole('STUDENT') or hasAuthority('STUDENT_UPDATE')) and @studentSecurityService.isOwner(#id, authentication))")
     public Student update(@PathVariable UUID id,
                           @RequestBody Student student) {
         return service.update(id, student);
@@ -73,7 +73,7 @@ public class StudentController {
 
     // DELETE
     @DeleteMapping("/{id}")
-    @PreAuthorize("hasAnyRole('SUPER_ADMIN','ACADEMIC_AFFAIRS') or hasAuthority('student:delete')")
+    @PreAuthorize("hasAnyRole('SUPER_ADMIN','ACADEMIC_AFFAIRS') or hasAuthority('STUDENT_DELETE')")
     public void delete(@PathVariable UUID id) {
         service.delete(id);
     }
@@ -81,7 +81,7 @@ public class StudentController {
     // SEARCH BY NAME
     // SEARCH + PHÂN TRANG (gần đúng theo tên/email)
     @GetMapping("/search")
-    @PreAuthorize("hasAnyRole('SUPER_ADMIN','ACADEMIC_AFFAIRS') or hasAuthority('student:read')")
+    @PreAuthorize("hasAnyRole('SUPER_ADMIN','ACADEMIC_AFFAIRS') or hasAuthority('STUDENT_VIEW')")
     public Page<Student> search(
             @RequestParam(name = "keyword", required = false) String keyword,
             @RequestParam(name = "page", defaultValue = "0") int page,

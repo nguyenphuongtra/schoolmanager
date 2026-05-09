@@ -167,6 +167,13 @@ export function createDomRefs() {
     userRoleModalRoleList: document.getElementById('userRoleModalRoleList'),
     btnSaveUserRoles: document.getElementById('btnSaveUserRoles'),
 
+    // Role Permissions
+    navRolePermissions: document.getElementById('navRolePermissions'),
+    rolePermissionsSection: document.getElementById('rolePermissionsSection'),
+    rpRoleList: document.getElementById('rpRoleList'),
+    rpSelectedRoleTitle: document.getElementById('rpSelectedRoleTitle'),
+    rpPermissionsContainer: document.getElementById('rpPermissionsContainer'),
+
     // Employees
     navEmployees: document.getElementById('navEmployees'),
     employeesSection: document.getElementById('employeesSection'),

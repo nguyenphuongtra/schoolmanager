@@ -55,7 +55,18 @@ public class AuthService {
             .sorted(Comparator.naturalOrder())
             .toList();
 
-        return new LoginResponse(token, user.getId(), user.getUsername(), user.getFullName(), roles);
+        List<String> permissions = user.getRoles().stream()
+            .filter(role -> role.getDeletedAt() == null)
+            .filter(role -> role.getIsActive() == null || Boolean.TRUE.equals(role.getIsActive()))
+            .flatMap(role -> role.getPermissions().stream())
+            .filter(perm -> perm.getDeletedAt() == null)
+            .filter(perm -> perm.getIsActive() == null || Boolean.TRUE.equals(perm.getIsActive()))
+            .map(perm -> perm.getCode().trim().toUpperCase())
+            .distinct()
+            .sorted(Comparator.naturalOrder())
+            .toList();
+
+        return new LoginResponse(token, user.getId(), user.getUsername(), user.getFullName(), roles, permissions);
     }
 
     private boolean matchesPassword(String rawPassword, String storedPassword) {

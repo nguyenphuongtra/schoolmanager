@@ -6,7 +6,7 @@ export function createEmployeesFeature(context) {
   const { state, refs, auth } = context;
 
   function canManage() {
-    return auth.hasRole('SUPER_ADMIN') || auth.hasRole('ACADEMIC_AFFAIRS');
+    return auth.canManageEmployees();
   }
 
   async function loadEmployees(page) {
