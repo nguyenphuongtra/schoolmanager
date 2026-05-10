@@ -27,13 +27,8 @@ public class RolePermissionService {
     }
 
     public void removePermission(UUID roleId, UUID permissionId) {
-        repository.findByRoleIdAndPermissionIdAndDeletedAtIsNull(roleId, permissionId)
-            .ifPresent(rolePermission -> {
-                rolePermission.setDeletedAt(LocalDateTime.now());
-                rolePermission.setIsActive(false);
-                rolePermission.setUpdatedAt(LocalDateTime.now());
-                repository.save(rolePermission);
-            });
+        repository.findByRoleIdAndPermissionId(roleId, permissionId)
+            .ifPresent(repository::delete);
     }
 
     public List<RolePermission> getPermissionsByRoleId(UUID roleId) {
