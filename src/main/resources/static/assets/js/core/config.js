@@ -1,4 +1,4 @@
-const BASE_URL ='http://localhost:8080/api';
+const BASE_URL ='https://schoolmanager-1e10.onrender.com/api';
 
 export const API_CONFIG = {
   auth: `${BASE_URL}/auth/login`,
